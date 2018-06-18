@@ -1,14 +1,21 @@
-const db = require('./models');
+const { db, Gardener, Plot, Vegetable } = require('./models');
 
 
 db.sync({force: true})
     .then(() => {
-        console.log('Databse synced!');
+        console.log('Database synced!');
     })
     .catch(err => {
-        console.log('Disaster! Something went wrong! ');
-        console.log(err)
+        console.log('Disaster! Something went wrong!');
+        console.log(err);
     })
     .finally(() => {
         db.close();
     });
+
+
+
+Vegetable.create()
+    .then(vegetable => {
+        return Plot.create({name: vegetable.name})
+    })
